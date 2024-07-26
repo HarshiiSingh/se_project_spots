@@ -1,0 +1,37 @@
+.profile {
+  display: flex;
+  padding: 34px 0 20px;
+  border-bottom: 1px rgba(33, 33, 33, 0.4) solid;
+}
+
+.profile__avatar {
+  margin-right: 20px;
+  border-radius: 8px;
+}
+
+.profile__column{
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__name {
+  margin: 0 0 12px;
+}
+
+.profile__description {
+  margin:  0;
+}
+
+.profile__edt-btn {
+  margin-top: auto;
+
+}
+
+.profile__add-btn {
+  margin: 138px 0  0 auto;
+  width: 149px;
+  height: 52px;
+  border-radius: 8px;
+  border-color: #212121;
+  background-color: #212121;
+}
