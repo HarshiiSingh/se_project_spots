@@ -11,7 +11,23 @@
   justify-content: space-between;
 }
 
+.card__image {
+  border-radius: 8px;
+}
+
+.card__title {
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
+  margin: 12px 0 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .card__like-btn {
+  margin: 12px 0 0;
   background-image: url(../images/heart.svg);
   width: 23px;
   height: 20px;
@@ -19,6 +35,12 @@
   background-color: transparent;
   opacity: 40%;
 }
+
+.card__like-btn:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
 
 @media screen and (max-width: 627px) {
   .card__image {

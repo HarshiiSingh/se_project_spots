@@ -1,0 +1,6 @@
+.footer {
+  display: flex;
+}
+.footer__copyright {
+  margin: 60px auto;
+}
