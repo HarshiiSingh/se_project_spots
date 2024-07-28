@@ -16,3 +16,9 @@ This is the third project of the Software Engineering program at TripleTen. It w
 This webpage is deployed on GitHub Pages.
 
 - [Deployment Link ](https://harshiisingh.github.io/se_project_spots/)
+
+### Video
+
+This video explains the created and submitted project.
+
+- [Video Link](https://drive.google.com/file/d/1duz_G7rsY31MryTWknfkVIb4RGFl2qyv/view?usp=drive_link)
