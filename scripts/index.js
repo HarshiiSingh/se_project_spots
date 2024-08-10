@@ -53,11 +53,11 @@ function openModal() {
   editNameModalInput.value = profileNameElement.textContent;
   editDescriptionModalInput.value = profileDescriptionElement.textContent;
 
-  editProfileModal.classList.add("modal__opened");
+  editProfileModal.classList.add("modal_opened");
 }
 
 function closeModal() {
-  editProfileModal.classList.remove("modal__opened");
+  editProfileModal.classList.remove("modal_opened");
 }
 
 function handleEditFormSubmit(evt) {
