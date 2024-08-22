@@ -1,3 +1,5 @@
+/* Finish Styling Preview Modal
+   Make Preview Modal Responsive*/
 .modal {
   position: fixed;
   top: 0;
@@ -27,16 +29,54 @@
   border-radius: 8px;
 }
 
+.modal__container_type_preview {
+  padding: 0;
+  width: auto;
+  background-color: transparent;
+}
+
+.modal__image {
+  max-width: 80vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+  width: 100%;
+  display: block;
+}
+
+.modal__caption {
+  position: absolute;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 1);
+  background-color: rgba(33, 33, 33, 1);
+  border-radius: 8px;
+  padding: 4px 8px;
+  margin: 8px 0 0 0;
+
+}
+
 .modal__close-btn {
   position: absolute;
   top: 32px;
   right: 50px;
   width: 40px;
   height: 40px;
-  background-image: url(../images/modal__close-img.png);
+  background-image: url("../images/modal__close-img.png");
   border: 0;
   background-color: transparent;
   opacity: 0.4;
+
+}
+
+.modal__close-btn_type_preview {
+  background-image: url("../images/close-icon-preview.svg");
+  top: 0;
+  right: -52.5px;
+  opacity: 1;
+  cursor: pointer;
 }
 
 .modal__close-btn:hover {
@@ -50,7 +90,6 @@
   font-weight: 500;
   font-size: 32px;
   line-height: 1;
-
 }
 
 .modal__label {

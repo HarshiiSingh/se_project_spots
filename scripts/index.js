@@ -45,6 +45,12 @@ const modalCloseButton = editProfileModal.querySelector(".modal__close-btn");
 const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
 
+// Select Preview Modal
+const previewModal = document.querySelector("#preview-modal");
+const previewModalImageEl = previewModal.querySelector(".modal__image");
+const previewModalCaptionEl = previewModal.querySelector(".modal__caption");
+const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn_type_preview");
+
 // Creates New Templates but doesn't add to CardsList
 function getCardElement(data) {
   const cardElement = cardTemplate.content.querySelector(".card").cloneNode(true);
@@ -53,6 +59,8 @@ function getCardElement(data) {
   const cardImageElement = cardElement.querySelector(".card__image");
   const cardLikeBtn = cardElement.querySelector(".card__like-btn");
   const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
+
+
 
   cardNameElement.textContent = data.name;
   cardImageElement.alt = data.name;
@@ -67,6 +75,19 @@ function getCardElement(data) {
   cardLikeBtn.addEventListener("click", () => {
     cardLikeBtn.classList.toggle("card__like-btn_liked");
   });
+
+  cardImageElement.addEventListener("click", () => {
+     openModal(previewModal);
+     previewModalImageEl.src = data.link;
+     previewModalImageEl.alt = data.name;
+     previewModalCaptionEl.textContent = data.name;
+
+  });
+
+  previewModalCloseBtn.addEventListener("click", () => {
+    closeModal(previewModal);
+  });
+
   return cardElement;
 }
 
