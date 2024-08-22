@@ -23,42 +23,66 @@ const initialCards = [{
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
 }];
 
+
+// Edit Profile Modal Section
+// Edit Profile Button
 const profileEditButton = document.querySelector(".profile__edt-btn");
+
+// Page Name and Description current values
 const profileNameElement = document.querySelector(".profile__name");
 const profileDescriptionElement = document.querySelector(".profile__description");
 
+// Edit Profile Modal
 const editProfileModal = document.querySelector("#edit-profile-modal");
-const editFormElement = editProfileModal.querySelector(".modal__form");
-const modalCloseButton = editProfileModal.querySelector(".modal__close-btn");
 const editNameModalInput = editProfileModal.querySelector("#profile-name-input");
 const editDescriptionModalInput = editProfileModal.querySelector("#profile-description-input");
 
+// Access form on Edit Profile Modal
+const editFormElement = editProfileModal.querySelector(".modal__form");
+const modalCloseButton = editProfileModal.querySelector(".modal__close-btn");
+
+// Access Card Template and Card List
 const cardTemplate = document.querySelector("#card-template");
 const cardsList = document.querySelector(".cards__list");
 
+// Creates New Templates but doesn't add to CardsList
 function getCardElement(data) {
   const cardElement = cardTemplate.content.querySelector(".card").cloneNode(true);
 
   const cardNameElement = cardElement.querySelector(".card__title");
   const cardImageElement = cardElement.querySelector(".card__image");
+  const cardLikeBtn = cardElement.querySelector(".card__like-btn");
+  const cardDeleteBtn = cardElement.querySelector(".card__delete-btn");
 
   cardNameElement.textContent = data.name;
   cardImageElement.alt = data.name;
   cardImageElement.src = data.link;
 
+
+  // Event Listener on Delete Button
+  cardDeleteBtn.addEventListener("click", (item) => {
+    item.target.closest(".card").remove();
+  });
+
+  cardLikeBtn.addEventListener("click", () => {
+    cardLikeBtn.classList.toggle("card__like-btn_liked");
+  });
   return cardElement;
 }
 
+// Function to Open Modal
 function openModal(modal) {
-
 
   modal.classList.add("modal_opened");
 }
 
+// Function to Close Modal
 function closeModal(modal) {
+
   modal.classList.remove("modal_opened");
 }
 
+// Submits Form on "Edit Profile" modal and updates profile on page
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
 
@@ -84,22 +108,45 @@ modalCloseButton.addEventListener("click", () => {
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 
 
+// "New Post" Modal Section
+// New Post Button
+const cardModalBtn = document.querySelector(".profile__add-btn"); //
+
 // New Post submission Modal
 const cardModal = document.querySelector("#add-card-profile-modal");
 const cardModalCloseBtn = cardModal.querySelector(".modal__close-btn");
-const cardModalBtn = document.querySelector(".profile__add-btn");
 
+// Accesses form on new form modal
+const cardForm = cardModal.querySelector(".modal__form");
 
+// Input information on Modal
+const editLinkModalInput = cardModal.querySelector("#add-card-link-input");
+const editCaptionModalInput = cardModal.querySelector("#add-card-name-input");
+
+// Function to add new Card to page
+function handleSaveFormSubmit(evt) {
+  evt.preventDefault();
+
+  const newCard = {name: editCaptionModalInput.value, link: editLinkModalInput.value};
+  const cardEl = getCardElement(newCard); // creates template from newCard object
+  cardsList.prepend(cardEl); // Adds to beginning of array
+  closeModal(cardModal);
+}
+
+// Opens "New Post Modal"
 cardModalBtn.addEventListener("click", () => {
   openModal(cardModal);
 });
 
+// Closes "New Post Modal"
 cardModalCloseBtn.addEventListener("click", () => {
   closeModal(cardModal);
 });
 
+// Submits Post from Modal
+cardForm.addEventListener("submit", handleSaveFormSubmit);
 
-
+// Loops through array and creates a Template forEach object in array and adds to ul class ".cards__list"
 initialCards.forEach((item) => {
   const cardEl = getCardElement(item);
   cardsList.append(cardEl);
