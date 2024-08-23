@@ -39,7 +39,7 @@ const editDescriptionModalInput = editProfileModal.querySelector("#profile-descr
 
 // Access form on Edit Profile Modal
 const editFormElement = editProfileModal.querySelector(".modal__form");
-const modalCloseButton = editProfileModal.querySelector(".modal__close-btn");
+const profileCloseButton = editProfileModal.querySelector(".modal__close-btn");
 
 // Access Card Template and Card List
 const cardTemplate = document.querySelector("#card-template");
@@ -84,12 +84,12 @@ function getCardElement(data) {
 
   });
 
-  previewModalCloseBtn.addEventListener("click", () => {
-    closeModal(previewModal);
-  });
-
   return cardElement;
 }
+
+previewModalCloseBtn.addEventListener("click", () => {
+  closeModal(previewModal);
+});
 
 // Function to Open Modal
 function openModal(modal) {
@@ -121,7 +121,7 @@ profileEditButton.addEventListener("click", () => {
 });
 
 // Closes "Edit Profile Modal"
-modalCloseButton.addEventListener("click", () => {
+profileCloseButton.addEventListener("click", () => {
   closeModal(editProfileModal);
 });
 
@@ -145,12 +145,16 @@ const editLinkModalInput = cardModal.querySelector("#add-card-link-input");
 const editCaptionModalInput = cardModal.querySelector("#add-card-name-input");
 
 // Function to add new Card to page
-function handleSaveFormSubmit(evt) {
+function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
   const newCard = {name: editCaptionModalInput.value, link: editLinkModalInput.value};
   const cardEl = getCardElement(newCard); // creates template from newCard object
   cardsList.prepend(cardEl); // Adds to beginning of array
+
+  document.getElementById('add-card-link-input').value = '';
+  document.getElementById('add-card-name-input').value = '';
+
   closeModal(cardModal);
 }
 
@@ -165,7 +169,7 @@ cardModalCloseBtn.addEventListener("click", () => {
 });
 
 // Submits Post from Modal
-cardForm.addEventListener("submit", handleSaveFormSubmit);
+cardForm.addEventListener("submit", handleCardFormSubmit);
 
 // Loops through array and creates a Template forEach object in array and adds to ul class ".cards__list"
 initialCards.forEach((item) => {
