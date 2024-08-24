@@ -152,10 +152,8 @@ function handleCardFormSubmit(evt) {
   const cardEl = getCardElement(newCard); // creates template from newCard object
   cardsList.prepend(cardEl); // Adds to beginning of array
 
-  document.getElementById('add-card-link-input').value = '';
-  document.getElementById('add-card-name-input').value = '';
-
   closeModal(cardModal);
+  evt.target.reset();
 }
 
 // Opens "New Post Modal"
