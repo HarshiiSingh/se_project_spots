@@ -117,6 +117,7 @@ function handleEditFormSubmit(evt) {
 profileEditButton.addEventListener("click", () => {
   editNameModalInput.value = profileNameElement.textContent;
   editDescriptionModalInput.value = profileDescriptionElement.textContent;
+  resetValidation(editFormElement, [editNameModalInput, editDescriptionModalInput])
   openModal(editProfileModal);
 });
 
@@ -130,11 +131,13 @@ editFormElement.addEventListener("submit", handleEditFormSubmit);
 
 
 // "New Post" Modal Section
+
 // New Post Button
 const cardModalBtn = document.querySelector(".profile__add-btn"); //
 
 // New Post submission Modal
 const cardModal = document.querySelector("#add-card-profile-modal");
+const cardSubmitBtn = cardModal.querySelector(".modal__submit-btn")
 const cardModalCloseBtn = cardModal.querySelector(".modal__close-btn");
 
 // Accesses form on new form modal
@@ -151,7 +154,7 @@ function handleCardFormSubmit(evt) {
   const newCard = {name: editCaptionModalInput.value, link: editLinkModalInput.value};
   const cardEl = getCardElement(newCard); // creates template from newCard object
   cardsList.prepend(cardEl); // Adds to beginning of array
-
+  disableButton(cardSubmitBtn);
   closeModal(cardModal);
   evt.target.reset();
 }
