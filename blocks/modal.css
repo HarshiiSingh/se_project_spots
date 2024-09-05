@@ -173,8 +173,12 @@
   }
 
   .modal__close-btn {
-    top: -30px;
+    top: 12px;
     right: 12px;
+  }
+
+  .modal__close-btn_type_preview {
+    top: -30px;
   }
 
   .modal__label {

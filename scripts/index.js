@@ -24,6 +24,10 @@ const initialCards = [{
 }];
 
 
+// Close Button
+
+
+
 // Edit Profile Modal Section
 // Edit Profile Button
 const profileEditButton = document.querySelector(".profile__edt-btn");
@@ -39,7 +43,6 @@ const editDescriptionModalInput = editProfileModal.querySelector("#profile-descr
 
 // Access form on Edit Profile Modal
 const editFormElement = editProfileModal.querySelector(".modal__form");
-const profileCloseButton = editProfileModal.querySelector(".modal__close-btn");
 
 // Access Card Template and Card List
 const cardTemplate = document.querySelector("#card-template");
@@ -49,7 +52,6 @@ const cardsList = document.querySelector(".cards__list");
 const previewModal = document.querySelector("#preview-modal");
 const previewModalImageEl = previewModal.querySelector(".modal__image");
 const previewModalCaptionEl = previewModal.querySelector(".modal__caption");
-const previewModalCloseBtn = previewModal.querySelector(".modal__close-btn_type_preview");
 
 // Creates New Templates but doesn't add to CardsList
 function getCardElement(data) {
@@ -87,10 +89,6 @@ function getCardElement(data) {
   return cardElement;
 }
 
-previewModalCloseBtn.addEventListener("click", () => {
-  closeModal(previewModal);
-});
-
 // Function to Open Modal
 function openModal(modal) {
   modal.classList.add("modal_opened");
@@ -123,11 +121,6 @@ profileEditButton.addEventListener("click", () => {
   openModal(editProfileModal);
 });
 
-// Closes "Edit Profile Modal"
-profileCloseButton.addEventListener("click", () => {
-  closeModal(editProfileModal);
-});
-
 // Submits text inputted through the profile modal and closes modal
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 
@@ -140,7 +133,6 @@ const cardModalBtn = document.querySelector(".profile__add-btn"); //
 // New Post submission Modal
 const cardModal = document.querySelector("#add-card-profile-modal");
 const cardSubmitBtn = cardModal.querySelector(".modal__submit-btn")
-const cardModalCloseBtn = cardModal.querySelector(".modal__close-btn");
 
 // Accesses form on new form modal
 const cardForm = cardModal.querySelector(".modal__form");
@@ -166,11 +158,6 @@ cardModalBtn.addEventListener("click", () => {
   openModal(cardModal);
 });
 
-// Closes "New Post Modal"
-cardModalCloseBtn.addEventListener("click", () => {
-  closeModal(cardModal);
-});
-
 // Submits Post from Modal
 cardForm.addEventListener("submit", handleCardFormSubmit);
 
@@ -189,6 +176,13 @@ function handleOverlayPress(evt) {
     closeModal(evt.target); // closes the modal
   }
 }
+
+const closeButtons = document.querySelectorAll(".modal__close-btn");
+
+closeButtons.forEach((button) => {
+  const closePopup = button.closest(".modal");
+  button.addEventListener('click', () => closeModal(closePopup));
+})
 
 // Loops through array and creates a Template forEach object in array and adds to ul class ".cards__list"
 initialCards.forEach((item) => {
