@@ -177,16 +177,16 @@ cardForm.addEventListener("submit", handleCardFormSubmit);
 // Closing the Modal using the Escape key and Overlay Click
 function handleEscapeModal(evt) {
   if (evt.key === "Escape") {
-    const openModal = document.querySelector(".modal_opened");
-    if (openModal) {
-      closeModal(openModal.closest(".modal"));
+    const modalOpened = document.querySelector(".modal_opened"); // Selects the Modal with the modal_opened attribute
+    if (modalOpened) {
+      closeModal(modalOpened.closest(".modal")); // closes the modal that is the closest ancestor to modal_opened (.modal in this case)
     }
   }
 }
 
 function handleOverlayPress(evt) {
-  if (evt.target.classList.contains("modal")) {
-    closeModal(evt.target);
+  if (evt.target.classList.contains("modal")) { // what the user is clicking on has the modal attribute (anything that isn't the container when the modal is opened)
+    closeModal(evt.target); // closes the modal
   }
 }
 
