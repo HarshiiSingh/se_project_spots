@@ -93,14 +93,16 @@ previewModalCloseBtn.addEventListener("click", () => {
 
 // Function to Open Modal
 function openModal(modal) {
-
   modal.classList.add("modal_opened");
+  modal.addEventListener("click", handleOverlayPress);
+  document.addEventListener("keydown", handleEscapeModal);
 }
 
 // Function to Close Modal
 function closeModal(modal) {
-
   modal.classList.remove("modal_opened");
+  modal.removeEventListener("click", handleOverlayPress);
+  document.removeEventListener("keydown", handleEscapeModal);
 }
 
 // Submits Form on "Edit Profile" modal and updates profile on page
@@ -171,6 +173,22 @@ cardModalCloseBtn.addEventListener("click", () => {
 
 // Submits Post from Modal
 cardForm.addEventListener("submit", handleCardFormSubmit);
+
+// Closing the Modal using the Escape key and Overlay Click
+function handleEscapeModal(evt) {
+  if (evt.key === "Escape") {
+    const openModal = document.querySelector(".modal_opened");
+    if (openModal) {
+      closeModal(openModal.closest(".modal"));
+    }
+  }
+}
+
+function handleOverlayPress(evt) {
+  if (evt.target.classList.contains("modal")) {
+    closeModal(evt.target);
+  }
+}
 
 // Loops through array and creates a Template forEach object in array and adds to ul class ".cards__list"
 initialCards.forEach((item) => {
