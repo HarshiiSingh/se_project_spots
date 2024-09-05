@@ -119,7 +119,7 @@ function handleEditFormSubmit(evt) {
 profileEditButton.addEventListener("click", () => {
   editNameModalInput.value = profileNameElement.textContent;
   editDescriptionModalInput.value = profileDescriptionElement.textContent;
-  resetValidation(editFormElement, [editNameModalInput, editDescriptionModalInput], settings)
+  resetValidation(editFormElement, [editNameModalInput, editDescriptionModalInput], settings) // hides error message for both inputs if user received an error and closed modal without fixing the error
   openModal(editProfileModal);
 });
 
@@ -156,7 +156,7 @@ function handleCardFormSubmit(evt) {
   const newCard = {name: editCaptionModalInput.value, link: editLinkModalInput.value};
   const cardEl = getCardElement(newCard); // creates template from newCard object
   cardsList.prepend(cardEl); // Adds to beginning of array
-  disableButton(cardSubmitBtn);
+  disableButton(cardSubmitBtn); // disables button after submission so user can't submit without making an edit
   closeModal(cardModal);
   evt.target.reset();
 }
