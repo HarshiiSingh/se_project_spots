@@ -33,8 +33,7 @@ const hasInvalidInput = (inputList) => {
 const toggleButtonState = (inputList, buttonElement, config) => {
   if (hasInvalidInput(inputList)) {
     // If button has at least one invalid input (which it should by default) disables button. (User must make changes in the edit profile modal and the New Post modal must have a valid input)
-    disableButton(buttonElement);
-    buttonElement.classList.add(config.inactiveButtonClass); // Adds inactive button css (greys out the button)
+    disableButton(buttonElement, config);
   } else {
     // If correct input then enables button and removes inactive button css
     buttonElement.disabled = false;
@@ -43,8 +42,9 @@ const toggleButtonState = (inputList, buttonElement, config) => {
 };
 
 // function for  disabling the buttonElement, this allows us to disable button from button submit in index.js
-const disableButton = (buttonElement) => {
+const disableButton = (buttonElement, config) => {
   buttonElement.disabled = true;
+  buttonElement.classList.add(config.inactiveButtonClass); // Adds inactive button css (greys out the button)
 }
 
 // Hides error messages when opening modal (used for edit profile modal), so when user has an error in the modal and reopens it, the error does not reappear when there shouldn't be

@@ -68,8 +68,8 @@ function getCardElement(data) {
 
 
   // Event Listener on Delete Button
-  cardDeleteBtn.addEventListener("click", (item) => {
-    item.target.closest(".card").remove();
+  cardDeleteBtn.addEventListener("click", () => {
+    cardElement.remove();
   });
 
   cardLikeBtn.addEventListener("click", () => {
@@ -156,7 +156,7 @@ function handleCardFormSubmit(evt) {
   const newCard = {name: editCaptionModalInput.value, link: editLinkModalInput.value};
   const cardEl = getCardElement(newCard); // creates template from newCard object
   cardsList.prepend(cardEl); // Adds to beginning of array
-  disableButton(cardSubmitBtn); // disables button after submission so user can't submit without making an edit
+  disableButton(cardSubmitBtn, settings); // disables button after submission so user can't submit without making an edit
   closeModal(cardModal);
   evt.target.reset();
 }
