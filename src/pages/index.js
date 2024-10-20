@@ -1,3 +1,5 @@
+import "./index.css";
+import { enableValidation, settings, resetValidation, disableButton } from "../scripts/validation.js";
 const initialCards = [{
   name: "Val Thorens",
   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
@@ -189,3 +191,5 @@ initialCards.forEach((item) => {
   const cardEl = getCardElement(item);
   cardsList.append(cardEl);
 });
+
+enableValidation(settings);

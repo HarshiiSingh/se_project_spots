@@ -1,4 +1,4 @@
-const settings = {
+export const settings = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__submit-btn",
@@ -42,13 +42,13 @@ const toggleButtonState = (inputList, buttonElement, config) => {
 };
 
 // function for  disabling the buttonElement, this allows us to disable button from button submit in index.js
-const disableButton = (buttonElement, config) => {
+export const disableButton = (buttonElement, config) => {
   buttonElement.disabled = true;
   buttonElement.classList.add(config.inactiveButtonClass); // Adds inactive button css (greys out the button)
 }
 
 // Hides error messages when opening modal (used for edit profile modal), so when user has an error in the modal and reopens it, the error does not reappear when there shouldn't be
-const resetValidation = (formElement, inputList, config) => {
+export const resetValidation = (formElement, inputList, config) => {
   inputList.forEach((input) => {
     hideInputError(formElement, input, config);
   });
@@ -83,7 +83,7 @@ const setEventListeners = (formElement, config) => {
 };
 
 // Enables all functions in validation.js
-const enableValidation = (config) => {
+export const enableValidation = (config) => {
   // Iterate through the forms and set event listeners throughout the form
   const formList = document.querySelectorAll(config.formSelector); // both forms on the webpage
   formList.forEach((formEl) => {
