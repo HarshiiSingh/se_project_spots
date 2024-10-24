@@ -26,6 +26,8 @@ import Api from "../utils/Api.js";
 //   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
 // }];
 
+let selectedCard;
+let selectedCardId;
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -54,6 +56,9 @@ api.getAppInfo()
   });
 
 
+// Delete form elements
+const deleteModal = document.querySelector("#delete-modal");
+const deleteForm = deleteModal.querySelector(".modal__button_delete");
 
 // Edit Profile Modal Section
 // Edit Profile Button
@@ -97,8 +102,8 @@ function getCardElement(data) {
 
 
   // Event Listener on Delete Button
-  cardDeleteBtn.addEventListener("click", () => {
-    cardElement.remove();
+  cardDeleteBtn.addEventListener("click", (evt) => {
+    handleDeleteCard(cardElement, data._id);
   });
 
   cardLikeBtn.addEventListener("click", () => {
@@ -115,6 +120,27 @@ function getCardElement(data) {
 
   return cardElement;
 }
+
+function handleDeleteCard(cardElement, cardId) {
+  selectedCard = cardElement;
+  selectedCardId = cardId;
+  openModal(deleteModal);
+}
+
+function handleDeleteSubmit(evt) {
+  evt.preventDefault();
+  api
+    .deleteCard(selectedCardId) // pass the ID the the api function
+    .then(() => {
+      // remove the card from the DOM
+      selectedCard.remove();
+      // close the modal
+      closeModal(deleteModal);
+    })
+    .catch(console.error);
+}
+
+deleteForm.addEventListener("submit", handleDeleteSubmit);
 
 // Function to Open Modal
 function openModal(modal) {
