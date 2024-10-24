@@ -1,32 +1,57 @@
 import "./index.css";
 import { enableValidation, settings, resetValidation, disableButton } from "../scripts/validation.js";
-const initialCards = [{
-  name: "Val Thorens",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
-},
-{
-  name: "Restaurant terrace",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg",
-},
-{
-  name: "An outdoor cafe",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg",
-},
-{
-  name: "A very long bridge, over the forest and through the trees",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg",
-},
-{
-  name: "Tunnel with morning light",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg",
-},
-{
-  name: "Mountain house",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
-}];
+import Api from "../utils/Api.js";
+// const initialCards = [{
+//   name: "Val Thorens",
+//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg",
+// },
+// {
+//   name: "Restaurant terrace",
+//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg",
+// },
+// {
+//   name: "An outdoor cafe",
+//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg",
+// },
+// {
+//   name: "A very long bridge, over the forest and through the trees",
+//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg",
+// },
+// {
+//   name: "Tunnel with morning light",
+//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg",
+// },
+// {
+//   name: "Mountain house",
+//   link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg",
+// }];
 
 
-// Close Button
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "4a9c527e-cce7-4c53-a998-2f54988841d1",
+    "Content-Type": "application/json"
+  }
+});
+
+const profileImage = document.querySelector(".profile__avatar");
+
+api.getAppInfo()
+  .then(([cards, avatar]) => {
+    console.log(cards);
+    console.log(avatar);
+    cards.forEach((item) => {
+      const cardEl = getCardElement(item);
+      cardsList.append(cardEl);
+    })
+    profileNameElement.textContent = avatar.name;
+    profileDescriptionElement.textContent = avatar.about;
+    profileImage.src = avatar.avatar;
+  })
+  .catch((err) => {
+    console.error(err);
+  });
 
 
 
@@ -108,10 +133,14 @@ function closeModal(modal) {
 // Submits Form on "Edit Profile" modal and updates profile on page
 function handleEditFormSubmit(evt) {
   evt.preventDefault();
+  api.editUserInfo({ name: editNameModalInput.value, about: editDescriptionModalInput.value})
+    .then((data) => {
+      profileNameElement.textContent = data.value;
+      profileDescriptionElement.textContent = data.value;
+      closeModal(editProfileModal);
+    })
+    .catch(console.error);
 
-  profileNameElement.textContent = editNameModalInput.value;
-  profileDescriptionElement.textContent = editDescriptionModalInput.value;
-  closeModal(editProfileModal);
 }
 
 
@@ -146,13 +175,15 @@ const editCaptionModalInput = cardModal.querySelector("#add-card-name-input");
 // Function to add new Card to page
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
-
-  const newCard = {name: editCaptionModalInput.value, link: editLinkModalInput.value};
-  const cardEl = getCardElement(newCard); // creates template from newCard object
-  cardsList.prepend(cardEl); // Adds to beginning of array
-  disableButton(cardSubmitBtn, settings); // disables button after submission so user can't submit without making an edit
-  closeModal(cardModal);
-  evt.target.reset();
+  api.addNewPost({name: editCaptionModalInput.value, link: editLinkModalInput.value})
+    .then((data) => {
+      const cardEl = getCardElement(data); // creates template from newCard object
+      cardsList.prepend(cardEl); // Adds to beginning of array
+      disableButton(cardSubmitBtn, settings); // disables button after submission so user can't submit without making an edit
+      closeModal(cardModal);
+      evt.target.reset();
+    })
+    .catch(console.error);
 }
 
 // Opens "New Post Modal"
@@ -187,9 +218,10 @@ closeButtons.forEach((button) => {
 })
 
 // Loops through array and creates a Template forEach object in array and adds to ul class ".cards__list"
-initialCards.forEach((item) => {
-  const cardEl = getCardElement(item);
-  cardsList.append(cardEl);
-});
+// initialCards.forEach((item) => {
+//   const cardEl = getCardElement(item);
+//   cardsList.append(cardEl);
+// });
 
 enableValidation(settings);
+

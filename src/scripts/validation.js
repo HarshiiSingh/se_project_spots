@@ -92,3 +92,5 @@ export const enableValidation = (config) => {
 }
 
 enableValidation(settings);
+
+// "4a9c527e-cce7-4c53-a998-2f54988841d1" auth token that I'll need to submit
