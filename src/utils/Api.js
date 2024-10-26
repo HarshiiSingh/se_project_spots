@@ -4,6 +4,14 @@ class Api {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json()
+    }
+    return Promise.reject(`Error: ${res.status}`);
+  }
+
   getAppInfo() {
     return Promise.all([this.getInitialCards(), this.getUserInfo()]);
   }
@@ -12,24 +20,14 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      });
+      .then(this._checkResponse);
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      });
+      .then(this._checkResponse);
   }
 
   editUserInfo({ name, about }) {
@@ -42,12 +40,7 @@ class Api {
         about,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      });
+      .then(this._checkResponse);
   }
 
   addNewPost({ name, link })  {
@@ -60,12 +53,7 @@ class Api {
         link,
       }),
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Error: ${res.status}`);
-      });
+      .then(this._checkResponse);
     }
 
     deleteCard(id) {
@@ -73,12 +61,7 @@ class Api {
         method: "DELETE",
         headers: this._headers,
       })
-        .then((res) => {
-          if (res.ok) {
-            return res.json()
-          }
-          return Promise.reject(`Error: ${res.status}`);
-        });
+        .then(this._checkResponse);
     }
 
     handleLike(id, isLiked) {
@@ -87,12 +70,7 @@ class Api {
         method: method,
         headers: this._headers,
       })
-        .then((res) => {
-          if (res.ok) {
-            return res.json()
-          }
-          return Promise.reject(`Error: ${res.status}`);
-        });
+        .then(this._checkResponse);
     }
 
     editAvatarInfo(avatar) {
@@ -104,12 +82,7 @@ class Api {
           avatar,
         }),
       })
-        .then((res) => {
-          if (res.ok) {
-            return res.json()
-          }
-          return Promise.reject(`Error: ${res.status}`);
-        });
+        .then(this._checkResponse);
     }
 }
 
